@@ -1,0 +1,32 @@
+<Sources>
+    <Source> 
+         <Title>TechCrunch</Title> 
+         <Description></Description> 
+         <Url>http://www.techcrunch.com</Url> 
+         <OpenInline>true</OpenInline>
+     </Source> 
+      <Source>
+        <Title>InfoQ</Title>
+         <Description></Description>
+         <Url>http://www.infoq.com</Url>
+         <OpenInline>true</OpenInline>
+    </Source> 
+    <Source>
+        <Title>Channel9</Title>
+        <Description></Description>
+        <Url>http://channel9.msdn.com</Url>
+        <OpenInline>true</OpenInline>
+    </Source>
+    <Source>
+        <Title>Pluggd</Title>
+        <Description></Description>
+        <Url>http://www.nextbigwhat.com/</Url>
+        <OpenInline>true</OpenInline>
+    </Source>
+     <Source>
+        <Title>Xda Developers</Title>
+        <Description></Description>
+        <Url>http://www.xda-developers.com/</Url>
+        <OpenInline>true</OpenInline>
+    </Source>
+</Sources>
