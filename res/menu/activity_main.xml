@@ -10,7 +10,7 @@
         android:id="@+id/menu_openinbrowser"
         android:orderInCategory="200"
         android:showAsAction="always"
-        android:title="Open"
+        android:title="@string/openinbrowser"
         
         />
     
@@ -18,8 +18,14 @@
         android:id="@+id/menu_share"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="Share"
+        android:title="@string/menu_share"
         
         />
-
+		<item
+        android:id="@+id/menu_configure"
+        android:orderInCategory="400"
+        android:showAsAction="always"
+        android:title="@string/menu_configure"
+        
+        />
 </menu>

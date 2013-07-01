@@ -16,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 
@@ -38,7 +36,7 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 	
-	Hashtable _webViewColl = new Hashtable();
+	Hashtable<Integer, ReaderView> _webViewColl = new Hashtable<Integer, ReaderView>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +74,19 @@ public class MainActivity extends FragmentActivity {
 			Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_LONG).show();
 			SendShareBroadcast();
 			break;
+		case R.id.menu_configure:
+			Configure();
+			break;
 		}
 		return true;
 	}
 	
+	
+
 	private void SendShareBroadcast() {
 		// TODO Auto-generated method stub
-		WebView wv =GetCurrentWebView() ;
-		String url = wv.getUrl();
+		ReaderView wv =GetCurrentReaderView() ;
+		String url = wv.GetUrl();
 		// send share broadcast
 		Intent shareIntent = new Intent();
 		shareIntent.setAction(Intent.ACTION_SEND);
@@ -94,31 +97,37 @@ public class MainActivity extends FragmentActivity {
 
 	private void OpenInBrowser() {
 		// TODO Auto-generated method stub
-		WebView wv =GetCurrentWebView() ;
-		String url = wv.getUrl();
+		ReaderView wv =GetCurrentReaderView() ;
+		String url = wv.GetUrl();
 		Intent openIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		startActivity(openIntent);
+	}
+	
+	private void Configure() {
+		
 	}
 
 	@Override 
 	public boolean onKeyDown(int keyCode, KeyEvent event) { 
-		WebView wv =GetCurrentWebView() ;
-	    // Check if the key event was the Back button and if there's history 
-	    if ((keyCode == KeyEvent.KEYCODE_BACK) && wv.canGoBack()) { 
-	    	wv.goBack(); 
-	        return true; 
-	    } 
-	    // If it wasn't the Back key or there's no web page history, bubble up to the default 
-	    // system behavior (probably exit the activity) 
-	    return super.onKeyDown(keyCode, event); 
+		ReaderView wv =GetCurrentReaderView() ;
+		Boolean status = wv.GoBack(keyCode, event);
+	    if(!status)
+	    {
+		    // If it wasn't the Back key or there's no web page history, bubble up to the default 
+		    // system behavior (probably exit the activity) 
+		    return super.onKeyDown(keyCode, event);
+	    }
+	    return status;
 	}
 	
-	public WebView GetCurrentWebView()
+	
+	
+	public ReaderView GetCurrentReaderView()
 	{
-		return (WebView) _webViewColl.get(mViewPager.getCurrentItem());
+		return (ReaderView) _webViewColl.get(mViewPager.getCurrentItem());
 	}
 
-	public void SetCurrentWebView(int position,WebView wv)
+	public void SetCurrentReaderView(int position,ReaderView wv)
 	{
 		_webViewColl.put(position, wv);
 	}
@@ -181,17 +190,13 @@ public class MainActivity extends FragmentActivity {
 			
 			NewsSourceModel model =  bundle.getParcelable(Constants.MODELKEY);
 			
-			WebView webView = new WebView(getActivity());
-			webView.loadUrl(model.Url);
-			if(model.OpenInline)
-			{
-				webView.setWebViewClient(new WebViewClient());
-			}
-			webView.getSettings().setJavaScriptEnabled(true);
-			int position = bundle.getInt(Constants.POSITIONKEY);
-			((MainActivity)getActivity()).SetCurrentWebView(position,webView);
+			ReaderView readerView = new ReaderView(getActivity());
+			readerView.Init(model);
 			
-			return webView;
+			int position = bundle.getInt(Constants.POSITIONKEY);
+			((MainActivity)getActivity()).SetCurrentReaderView(position,readerView);
+			
+			return readerView;
 		}
 	}
 

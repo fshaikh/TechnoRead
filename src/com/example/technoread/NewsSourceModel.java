@@ -10,6 +10,7 @@ public class NewsSourceModel implements Parcelable {
 	public boolean OpenInline;
 	
 	
+	
 	public NewsSourceModel(Parcel in) {
 		Title = in.readString();
 		Description = in.readString();
