@@ -2,6 +2,8 @@ package com.example.technoread;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.webkit.WebView;
@@ -64,13 +66,21 @@ public class ReaderView extends LinearLayout {
 		if(show)
 		{
 			//_progressBar.setVisibility(ProgressBar.VISIBLE);
-			_progressDialog.setMessage("Loading...");
-			_progressDialog.show();
+			//_progressDialog.setMessage("Loading...");
+			//_progressDialog.show();
+			SendRefreshBroadcast(true);
 		}
 		else
 		{
 			//_progressBar.setVisibility(ProgressBar.GONE);
-			_progressDialog.hide();
+			//_progressDialog.hide();
+			SendRefreshBroadcast(false);
 		}
+	}
+
+	private void SendRefreshBroadcast(boolean status) {
+		Intent doneintent = new Intent("refresh");
+		doneintent.putExtra(SPConstants.REFRESHINTENT_KEY, status);
+		LocalBroadcastManager.getInstance(_context).sendBroadcast(doneintent);
 	}
 }

@@ -2,13 +2,18 @@ package com.example.technoread;
 
 import java.util.Hashtable;
 
+import android.app.ActionBar;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,7 +40,7 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	
+	MenuItem _refreshMenuItem = null;
 	Hashtable<Integer, ReaderView> _webViewColl = new Hashtable<Integer, ReaderView>();
 
 	@Override
@@ -52,7 +57,10 @@ public class MainActivity extends FragmentActivity {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
-		AppService.GetInstance(getApplicationContext()).GetNewsSource();
+		LocalBroadcastManager.getInstance(getApplicationContext())
+		.registerReceiver(_mainActivityReceiver,
+						  new IntentFilter("refresh"));
+		_refreshMenuItem = (MenuItem)findViewById(R.id.menu_refresh);
 	}
 
 	@Override
@@ -78,6 +86,9 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case R.id.menu_configure:
 			Configure();
+			break;
+		case R.id.menu_refresh:
+			Toast.makeText(getApplicationContext(), "refresh", Toast.LENGTH_LONG).show();
 			break;
 		}
 		return true;
@@ -200,5 +211,23 @@ public class MainActivity extends FragmentActivity {
 			return readerView;
 		}
 	}
+	
+	private BroadcastReceiver _mainActivityReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			boolean status = intent.getBooleanExtra(SPConstants.REFRESHINTENT_KEY, true);
+			if(MainActivity.this._refreshMenuItem != null)
+			{
+				if(status)
+				{
+					MainActivity.this._refreshMenuItem.setActionView(R.layout.refresh_actionview);
+				}
+				else
+				{
+					MainActivity.this._refreshMenuItem.setActionView(null);
+				}
+			}
+		}
+	};
 
 }

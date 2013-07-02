@@ -21,10 +21,19 @@
         android:title="@string/menu_share"
         android:icon="@drawable/social_share"
         />
-		<item
-        android:id="@+id/menu_configure"
+    
+    <item
+        android:id="@+id/menu_refresh"
         android:orderInCategory="400"
         android:showAsAction="always"
+        android:title="@string/menu_refresh"
+        android:icon="@drawable/navigation_refresh"
+        />
+    
+		<item
+        android:id="@+id/menu_configure"
+        android:orderInCategory="500"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_configure"
         
         />

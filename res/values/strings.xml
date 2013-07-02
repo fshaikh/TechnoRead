@@ -18,4 +18,5 @@
 	<string name="urlHintText">Enter Url Here</string>
 	<string name="openInlineHintText">Open In TechnoReader</string>
 	<string name="saveButton">Save</string>
+	<string name="menu_refresh">Refresh</string>
 </resources>
