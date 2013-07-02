@@ -51,6 +51,8 @@ public class MainActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		AppService.GetInstance(getApplicationContext()).GetNewsSource();
 	}
 
 	@Override
@@ -80,8 +82,6 @@ public class MainActivity extends FragmentActivity {
 		}
 		return true;
 	}
-	
-	
 
 	private void SendShareBroadcast() {
 		// TODO Auto-generated method stub
@@ -104,7 +104,8 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	private void Configure() {
-		
+		Intent configureActivityIntent = new Intent("android.intent.action.ConfigureActivity");
+		startActivity(configureActivityIntent);
 	}
 
 	@Override 

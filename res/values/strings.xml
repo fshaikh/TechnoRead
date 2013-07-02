@@ -9,5 +9,13 @@
     <string name="menu_settings">Settings</string>
     <string name="openinbrowser">Open in Browser</string>
     <string name="menu_share">Share</string>
-	<string name="menu_configure">Configure</string>
+    <string name="menu_configure">Configure</string>
+    <string name="title_activity_configure">ConfigureActivity</string>
+	<string name="menu_save">Save</string>
+	<string name="menu_add">Add</string>
+	<string name="titleHintText">Enter Title Here</string>
+	<string name="descriptionHintText">Enter description here</string>
+	<string name="urlHintText">Enter Url Here</string>
+	<string name="openInlineHintText">Open In TechnoReader</string>
+	<string name="saveButton">Save</string>
 </resources>

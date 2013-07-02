@@ -30,7 +30,7 @@ public class AppWebViewClient extends WebViewClient {
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 }

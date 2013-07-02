@@ -8,7 +8,6 @@ public class TechnoReadApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		AppService.GetInstance(getApplicationContext()).SeedSources();
+		AppService.GetInstance(getApplicationContext()).SeedSources();		
 	}
-	
 }

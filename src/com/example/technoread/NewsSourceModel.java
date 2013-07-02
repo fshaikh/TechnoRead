@@ -8,7 +8,7 @@ public class NewsSourceModel implements Parcelable {
 	public String Description;
 	public String Url;
 	public boolean OpenInline;
-	
+	public boolean IsAdded = true;
 	
 	
 	public NewsSourceModel(Parcel in) {
@@ -16,6 +16,7 @@ public class NewsSourceModel implements Parcelable {
 		Description = in.readString();
 		Url = in.readString();
 		OpenInline = Boolean.parseBoolean(in.readString());
+		IsAdded = Boolean.parseBoolean(in.readString());
 	}
 	public NewsSourceModel() {
 		// TODO Auto-generated constructor stub
@@ -31,6 +32,7 @@ public class NewsSourceModel implements Parcelable {
 		dest.writeString(Description);
 		dest.writeString(Url);
 		dest.writeString(String.valueOf(OpenInline));
+		dest.writeString(String.valueOf(IsAdded));
 	}
 	
 	public static final Parcelable.Creator<NewsSourceModel> CREATOR
