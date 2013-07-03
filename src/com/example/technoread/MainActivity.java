@@ -184,7 +184,6 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-
 	public static class NewsSectionFragment extends Fragment {
 		public NewsSectionFragment() {
 		}
@@ -224,5 +223,4 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	};
-
 }

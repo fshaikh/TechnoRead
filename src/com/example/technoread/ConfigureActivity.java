@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +26,8 @@ public class ConfigureActivity extends Activity {
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[]{0xFFFFFFFF, 0xFFFFFFFF});
 	getActionBar().setBackgroundDrawable(gd);
+	
+	 
 	}
 
 	@Override
@@ -30,15 +35,6 @@ public class ConfigureActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_configure, menu);
 		return true;
-	}
-	
-	
-	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		Toast.makeText(getApplicationContext(), "OnResume", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -49,13 +45,13 @@ public class ConfigureActivity extends Activity {
 			SaveChanges();
 			return true;
 		case R.id.menu_add:
-			AddNewsSource();
+			AddNewsSource(null);
 			return true;
 		}
 		return true;
 	}
 
-	public void Refresh(NewsSourceModel model)
+	public void Refresh(NewsSourceModel model, boolean _isNew)
 	{
 		AppService.GetInstance(getApplicationContext()).AddNewsSource(model);
 		boolean status = AppService.GetInstance(getApplicationContext()).PersistChanges();
@@ -76,9 +72,9 @@ public class ConfigureActivity extends Activity {
 
 	}
 	
-	private void AddNewsSource()
+	private void AddNewsSource(NewsSourceModel model)
 	{
-		AddNewsSourceDialog dlg = new AddNewsSourceDialog(null,getApplicationContext());
+		AddNewsSourceDialog dlg = new AddNewsSourceDialog(model,getApplicationContext());
 		dlg.show(getFragmentManager(), "AddNewsSourceDialog");
 	}
 
@@ -87,11 +83,27 @@ public class ConfigureActivity extends Activity {
 		_adapter = new NewsSourceListAdapter(this, R.layout.configureactivity_listviewitem,  modelRecords);
 		ListView lv = getListViewInternal();
 		lv.setAdapter(_adapter);
+		lv.setOnItemClickListener(new ListHelper());
 	}
 	
 	private ListView getListViewInternal() {
 		ListView lv = (ListView)findViewById(R.id._newsSourceListView);
 		return lv;
+	}
+	
+	private final class ListHelper implements OnItemClickListener
+	{
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View view, int arg2,
+				long id)
+		{
+			NewsSourceModel model =  (NewsSourceModel) AppService.GetInstance(getApplicationContext()).GetItemFromAll((int) id);
+			if(model != null)
+			{
+				AddNewsSource(model);
+			}
+		}
+		
 	}
 
 }

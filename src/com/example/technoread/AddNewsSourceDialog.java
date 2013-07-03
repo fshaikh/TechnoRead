@@ -17,6 +17,7 @@ public class AddNewsSourceDialog extends DialogFragment {
 	
 	NewsSourceModel _model = null;
 	Context _context = null;
+	boolean _isNew = true;
 	
 	public AddNewsSourceDialog()
 	{
@@ -41,7 +42,7 @@ public class AddNewsSourceDialog extends DialogFragment {
 		ConfigureActivity configureActivity = (ConfigureActivity)getActivity();
 		if(configureActivity != null && _model != null)
 		{
-			configureActivity.Refresh(_model);
+			configureActivity.Refresh(_model,_isNew);
 		}
 	}
 	@Override
@@ -51,13 +52,23 @@ public class AddNewsSourceDialog extends DialogFragment {
         if(_model != null)
         {
         	// show the model values in the UI
+        	_isNew = false;
+        	PopulateUI(v);
         }
         Button saveBtn = (Button)v.findViewById(R.id._saveButton);
         saveBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
-				NewsSourceModel model = new NewsSourceModel();
+				NewsSourceModel model = null;
+				if(_isNew)
+				{
+					model = new NewsSourceModel();
+				}
+				else
+				{
+					model = _model;
+				}
 				FillModel(v,model);
 				_model = model;
 				AddNewsSourceDialog.this.dismiss();
@@ -86,4 +97,17 @@ public class AddNewsSourceDialog extends DialogFragment {
 		});
         return v;
     }
+	
+	private void SetEditText(View view,int id,String value)
+	{
+		EditText tv = (EditText)view.findViewById(id);
+		tv.setText(value);
+	}
+	private void PopulateUI(View view) {
+		SetEditText(view,R.id._titleEditText,_model.Title);
+		SetEditText(view,R.id._descriptionEditText	,_model.Description);
+		SetEditText(view,R.id._urlEditText,_model.Url);
+		CheckBox cb = (CheckBox)view.findViewById(R.id._openInlineCheckBox);
+		cb.setChecked(_model.OpenInline);
+	}
 }

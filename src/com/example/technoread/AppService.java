@@ -72,6 +72,11 @@ public class AppService {
 		return _addedViewModel.get(position);
 	}
 	
+	public NewsSourceModel GetItemFromAll(int position)
+	{
+		return _sourcesList.get(position);
+	}
+	
 	public int GetSourcesCount()
 	{
 		return _addedViewModel.size();
@@ -115,8 +120,24 @@ public class AppService {
 	
 	public void AddNewsSource(NewsSourceModel model)
 	{
-		_sourcesList.add(model);
-		if(!_addedViewModel.contains(model))
+		
+		if(_sourcesList.contains(model))
+		{
+			int index = _sourcesList.indexOf(model);
+			_sourcesList.set(index, model);
+		}
+		else
+		{
+			_sourcesList.add(model);
+		}
+		
+
+		if(_addedViewModel.contains(model))
+		{
+			int index = _addedViewModel.indexOf(model);
+			_addedViewModel.set(index, model);
+		}
+		else
 		{
 			_addedViewModel.add(model);
 		}
