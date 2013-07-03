@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -17,6 +18,11 @@ public class ConfigureActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_configure);
 		SetListAdaptorInternal(AppService.GetInstance(getApplicationContext()).GetNewsSource());
+		
+		 GradientDrawable gd = new GradientDrawable(
+	                GradientDrawable.Orientation.TOP_BOTTOM,
+	                new int[]{0xFFFFFFFF, 0xFF000000});
+		getActionBar().setBackgroundDrawable(gd);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.example.technoread;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -8,14 +8,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+
 
 public class ReaderView extends LinearLayout {
 	private WebView _webView = null;
-	private ProgressBar _progressBar = null;
 	private NewsSourceModel _model = null;
 	private Context _context = null;
-	private ProgressDialog _progressDialog = null;
+
 	
 	public ReaderView(Context context) {
 		super(context);
@@ -30,8 +29,7 @@ public class ReaderView extends LinearLayout {
 		li.inflate(R.layout.readerviewlayout, this, true);
 		// get references to contained views
 		_webView = (WebView)findViewById(R.id._webView);
-		_progressBar = (ProgressBar)findViewById(R.id._progressBar);
-		_progressDialog = new ProgressDialog(_context);
+		
 	}
 
 	public void Init(NewsSourceModel model)
@@ -75,6 +73,14 @@ public class ReaderView extends LinearLayout {
 			//_progressBar.setVisibility(ProgressBar.GONE);
 			//_progressDialog.hide();
 			SendRefreshBroadcast(false);
+		}
+	}
+	
+	public void RefreshView()
+	{
+		if(_webView != null)
+		{
+			_webView.reload();
 		}
 	}
 

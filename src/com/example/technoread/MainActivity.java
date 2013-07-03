@@ -2,11 +2,11 @@ package com.example.technoread;
 
 import java.util.Hashtable;
 
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 
 
 public class MainActivity extends FragmentActivity {
@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	MenuItem _refreshMenuItem = null;
+	Menu _menu = null;
 	Hashtable<Integer, ReaderView> _webViewColl = new Hashtable<Integer, ReaderView>();
 
 	@Override
@@ -60,13 +60,17 @@ public class MainActivity extends FragmentActivity {
 		LocalBroadcastManager.getInstance(getApplicationContext())
 		.registerReceiver(_mainActivityReceiver,
 						  new IntentFilter("refresh"));
-		_refreshMenuItem = (MenuItem)findViewById(R.id.menu_refresh);
+		 GradientDrawable gd = new GradientDrawable(
+	                GradientDrawable.Orientation.TOP_BOTTOM,
+	                new int[]{0xFFFFFFFF, 0xFF000000});
+		getActionBar().setBackgroundDrawable(gd);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
+		_menu = menu;
 		return true;
 	}
 
@@ -81,17 +85,21 @@ public class MainActivity extends FragmentActivity {
 			OpenInBrowser();
 			break;
 		case R.id.menu_share:
-			Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_LONG).show();
 			SendShareBroadcast();
 			break;
 		case R.id.menu_configure:
 			Configure();
 			break;
 		case R.id.menu_refresh:
-			Toast.makeText(getApplicationContext(), "refresh", Toast.LENGTH_LONG).show();
+			Refresh();
 			break;
 		}
 		return true;
+	}
+
+	private void Refresh() {
+		ReaderView wv =GetCurrentReaderView() ;
+		wv.RefreshView();
 	}
 
 	private void SendShareBroadcast() {
@@ -157,7 +165,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
+			// Return a NewsSectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
 			NewsSourceModel model = AppService.GetInstance(getApplicationContext()).GetItem(position);
 			
@@ -171,7 +179,6 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
 			return AppService.GetInstance(getApplicationContext()).GetSourcesCount();
 		}
 
@@ -181,17 +188,8 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
+
 	public static class NewsSectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-
-
 		public NewsSectionFragment() {
 		}
 
@@ -216,15 +214,16 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			boolean status = intent.getBooleanExtra(SPConstants.REFRESHINTENT_KEY, true);
-			if(MainActivity.this._refreshMenuItem != null)
+			if(_menu != null)
 			{
+				MenuItem refreshMenuItem= _menu.findItem(R.id.menu_refresh);
 				if(status)
 				{
-					MainActivity.this._refreshMenuItem.setActionView(R.layout.refresh_actionview);
+					refreshMenuItem.setActionView(R.layout.refresh_actionview);
 				}
 				else
 				{
-					MainActivity.this._refreshMenuItem.setActionView(null);
+					refreshMenuItem.setActionView(null);
 				}
 			}
 		}
