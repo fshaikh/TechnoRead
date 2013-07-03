@@ -5,6 +5,7 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/menu_save"
+        android:icon="@drawable/content_save"
         />
      
       <item
@@ -12,5 +13,6 @@
         android:orderInCategory="200"
         android:showAsAction="always"
         android:title="@string/menu_add"
+        android:icon="@drawable/content_new"
         />
 </menu>

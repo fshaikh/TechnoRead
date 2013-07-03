@@ -11,7 +11,7 @@
         android:orderInCategory="200"
         android:showAsAction="always"
         android:title="@string/openinbrowser"
-        
+        android:icon="@drawable/open_icon"
         />
     
     <item
@@ -33,8 +33,8 @@
 		<item
         android:id="@+id/menu_configure"
         android:orderInCategory="500"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_configure"
-        
+        android:icon="@drawable/action_settings"
         />
 </menu>

@@ -62,7 +62,7 @@ public class MainActivity extends FragmentActivity {
 						  new IntentFilter("refresh"));
 		 GradientDrawable gd = new GradientDrawable(
 	                GradientDrawable.Orientation.TOP_BOTTOM,
-	                new int[]{0xFFFFFFFF, 0xFF000000});
+	                new int[]{0xFFFFFFFF, 0xFFFFFFFF});
 		getActionBar().setBackgroundDrawable(gd);
 	}
 
@@ -73,8 +73,6 @@ public class MainActivity extends FragmentActivity {
 		_menu = menu;
 		return true;
 	}
-
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,9 +137,7 @@ public class MainActivity extends FragmentActivity {
 	    }
 	    return status;
 	}
-	
-	
-	
+
 	public ReaderView GetCurrentReaderView()
 	{
 		return (ReaderView) _webViewColl.get(mViewPager.getCurrentItem());

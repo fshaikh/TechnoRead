@@ -19,10 +19,10 @@ public class ConfigureActivity extends Activity {
 		setContentView(R.layout.activity_configure);
 		SetListAdaptorInternal(AppService.GetInstance(getApplicationContext()).GetNewsSource());
 		
-		 GradientDrawable gd = new GradientDrawable(
-	                GradientDrawable.Orientation.TOP_BOTTOM,
-	                new int[]{0xFFFFFFFF, 0xFF000000});
-		getActionBar().setBackgroundDrawable(gd);
+		GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{0xFFFFFFFF, 0xFFFFFFFF});
+	getActionBar().setBackgroundDrawable(gd);
 	}
 
 	@Override

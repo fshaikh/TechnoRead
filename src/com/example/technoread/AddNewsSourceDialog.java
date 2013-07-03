@@ -39,7 +39,7 @@ public class AddNewsSourceDialog extends DialogFragment {
 	public void onDismiss(DialogInterface dialog) {
 		super.onDismiss(dialog);
 		ConfigureActivity configureActivity = (ConfigureActivity)getActivity();
-		if(configureActivity != null)
+		if(configureActivity != null && _model != null)
 		{
 			configureActivity.Refresh(_model);
 		}
