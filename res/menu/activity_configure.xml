@@ -15,4 +15,12 @@
         android:title="@string/menu_add"
         android:icon="@drawable/content_new"
         />
+      
+      <item
+        android:id="@+id/menu_showSource"
+        android:orderInCategory="300"
+        android:showAsAction="never"
+        android:title="@string/menu_showSource"
+        android:icon="@drawable/open_icon"
+        />
 </menu>
