@@ -47,6 +47,9 @@ public class ConfigureActivity extends Activity {
 		case R.id.menu_add:
 			AddNewsSource(null);
 			return true;
+		case R.id.menu_showSource:
+			ShowSource();
+			return true;
 		}
 		return true;
 	}
@@ -76,6 +79,12 @@ public class ConfigureActivity extends Activity {
 	{
 		AddNewsSourceDialog dlg = new AddNewsSourceDialog(model,getApplicationContext());
 		dlg.show(getFragmentManager(), "AddNewsSourceDialog");
+	}
+	
+	private void ShowSource()
+	{
+		String filecontent = AppService.GetInstance(getApplicationContext()).GetRawSourceData();
+		Toast.makeText(getApplicationContext(), filecontent, Toast.LENGTH_LONG).show();
 	}
 
 	private void SetListAdaptorInternal(ArrayList<NewsSourceModel> modelRecords)

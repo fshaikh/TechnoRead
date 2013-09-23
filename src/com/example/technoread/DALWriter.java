@@ -1,5 +1,8 @@
 package com.example.technoread;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -35,6 +38,54 @@ public class DALWriter {
 		FileWriter fileWriter = new FileWriter(filePath, false);
 		fileWriter.write(content);
 		fileWriter.close();
+	}
+	
+	public static String ReadFile(Context context)
+	{
+		String filePath = SourceFileSeeder.GetSourceFilePath(context);
+		String fileContentStr = "";
+		File file = new File(filePath);
+		FileInputStream inputStream = null;
+		try
+		{
+			inputStream = new FileInputStream(filePath);
+			byte fileContent[] = new byte[(int)inputStream.available()];
+			inputStream.read(fileContent);
+			fileContentStr = new String(fileContent);
+			return fileContentStr;
+		}
+		catch(FileNotFoundException ex)
+		{
+			return fileContentStr;
+		}
+		catch(IOException ex)
+		{
+			return fileContentStr;
+		}
+		finally
+		{
+			Dispose(inputStream);
+		}
+	}
+	
+	private static void Dispose(FileInputStream inputStream)
+	{
+		try
+		{
+			if(inputStream != null)
+			{
+				inputStream.close();
+				inputStream = null;
+			}
+		}
+		catch(IOException ex)
+		{
+			
+		}
+		finally
+		{
+			
+		}
 	}
 
 	private static void SetTag(XmlSerializer xs, String value,String tagName)

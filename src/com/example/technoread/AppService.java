@@ -143,6 +143,12 @@ public class AppService {
 		}
 	}
 	
+	public String GetRawSourceData()
+	{
+		String fileContent = DALWriter.ReadFile(_context);
+		return fileContent;
+	}
+	
 	public boolean PersistChanges()
 	{
 		// save the in-memory model to xml file
