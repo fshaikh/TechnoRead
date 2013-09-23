@@ -4,6 +4,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,11 +15,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 
-public class AddNewsSourceDialog extends DialogFragment {
+public class AddNewsSourceDialog extends DialogFragment implements TextWatcher {
 	
 	NewsSourceModel _model = null;
 	Context _context = null;
 	boolean _isNew = true;
+	EditText _urlEditText = null;
 	
 	public AddNewsSourceDialog()
 	{
@@ -55,6 +58,8 @@ public class AddNewsSourceDialog extends DialogFragment {
         	_isNew = false;
         	PopulateUI(v);
         }
+        _urlEditText = (EditText)v.findViewById(R.id._urlEditText);
+        //_urlEditText.addTextChangedListener(this);
         Button saveBtn = (Button)v.findViewById(R.id._saveButton);
         saveBtn.setOnClickListener(new OnClickListener() {
 			
@@ -109,5 +114,25 @@ public class AddNewsSourceDialog extends DialogFragment {
 		SetEditText(view,R.id._urlEditText,_model.Url);
 		CheckBox cb = (CheckBox)view.findViewById(R.id._openInlineCheckBox);
 		cb.setChecked(_model.OpenInline);
+	}
+	
+	@Override
+	public void afterTextChanged(Editable arg0) {
+		String str = _urlEditText.getText().toString();
+		if(str!=null)
+		{
+			
+		}
+	}
+	@Override
+	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+			int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -13,7 +13,7 @@ import android.content.res.AssetManager;
 public class SourceFileSeeder {
 	public static boolean SeedSourceStorage(Context context)
 	{
-		Delete(context);
+		//Delete(context);
 		if(IsSeedRequired(context))
 		{
 	        	try
